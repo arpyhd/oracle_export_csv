@@ -41,13 +41,13 @@ define comma=chr(44)
 select 'set trimspool on' from dual;
 select 'set termout off pages 0 heading off echo off' from dual;
 select 'set line ' || :linelen from dual;
-select 'spool ' || lower(replace('&dumpfile$','$','')) from dual;
+select 'spool ' || replace('&dumpfile$','$','') from dual;
 
 select 'select' || chr(10) from dual;
 
 select '   ' || &&squote || &&dquote  || &&squote || ' || ' ||
          &&squote || column_name || &&squote
-        || ' ||' || &&squote || '",' || &&squote || ' || ',
+        || ' ||' || &&squote || '"|' || &&squote || ' || ',
         column_id
 from all_tab_columns
 where table_name = upper('&dumptable')
@@ -70,7 +70,7 @@ select 'union all' from dual;
 select 'select' || chr(10) from dual;
 select '   ' || &&squote || &&dquote  || &&squote || ' || ' ||
         'replace(' || column_name || &&comma || &&squote ||  &&dquote || &&squote || ') '
-        || ' ||' || &&squote || '",' || &&squote || ' || ',
+        || ' ||' || &&squote || '"|' || &&squote || ' || ',
         column_id
 from all_tab_columns
 where table_name = upper('&dumptable')
